@@ -59,7 +59,9 @@ export function SignInForm() {
       email: values.email,
       password: values.password,
       redirect: true,
-      callbackUrl: `${window.location.origin}/`
+      callbackUrl: `${
+        typeof window != undefined ? window.location.origin : "/"
+      }`
     })
       .then((res) => {
         toast.success("Successfully Logged In");

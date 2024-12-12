@@ -39,7 +39,8 @@ export const Options: NextAuthOptions = {
                         }
                     }
                 } catch (error) {
-                    toast.error("Invalid credentials");
+                    console.log(error);
+
                 } finally {
                     await prisma.$disconnect();
                 }
@@ -89,13 +90,9 @@ export const Options: NextAuthOptions = {
         newUser: "/api/auth/signUp",
     },
     callbacks: {
-        async signIn({ user, account, profile }) {
-            // Add your own sign-in logic here
-            return true;
-        },
-        async redirect({ url, baseUrl }) {
+        async redirect({ url }) {
             // Redirect to home page after sign-in
-            return url.startsWith(baseUrl) ? url : baseUrl;
+            return url;
         },
         async session({ session, token }) {
             session.user.accessToken = token.accessToken as string;

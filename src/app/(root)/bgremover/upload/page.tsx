@@ -1,12 +1,11 @@
+//@ts-ignore
 "use client";
-
 import Image from "next/image";
 import React from "react";
 import { useSelector } from "react-redux";
+
 export default function page() {
-  const data = useSelector(
-    (state: { data: { value: any } }) => state.data.value
-  );
+  const data = useSelector((state: any) => state.data.value);
   return (
     <div>
       <Image
