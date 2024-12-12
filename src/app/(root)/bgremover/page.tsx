@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import BgFileUpload from "@/app/(root)/bgremover/(components)/BgFileUpload";
 import Header from "@/components/custom/Header";
+import Result from "./(components)/Result";
 
 export default function page() {
   return (
@@ -34,6 +35,7 @@ export default function page() {
         }}
       ></div>
       <div className="max-w-6xl mx-auto">
+        <Result />
         <div className="py-12 mt-24 grid md:grid-cols-3 gap-3">
           {[
             {

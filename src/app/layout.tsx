@@ -35,8 +35,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClientSessionProvider>
-          <ReduxProvider>
+        <ReduxProvider>
+          <ClientSessionProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
@@ -45,10 +45,9 @@ export default function RootLayout({
             >
               {children}
               <Toaster richColors />
-              <GetAuth />
             </ThemeProvider>
-          </ReduxProvider>
-        </ClientSessionProvider>
+          </ClientSessionProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

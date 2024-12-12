@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import Data from './reducers/data'
 import authslice from './reducers/AuthSlice'
+import Resizer from './reducers/resize'
+import Upscaler from './reducers/upscaler'
 
 export const store = configureStore({
     reducer: {
         data: Data,
+        resizer: Resizer,
+        upscale: Upscaler,
         auth: authslice,
     },
 })

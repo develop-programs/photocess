@@ -13,7 +13,7 @@ const initialState: CounterState = {
     loading: true
 }
 
-export const Data = createSlice({
+export const Resizer = createSlice({
     name: 'counter',
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
@@ -29,9 +29,9 @@ export const Data = createSlice({
     },
 })
 
-export const { addData } = Data.actions
+export const { addData } = Resizer.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const info = (state: RootState) => state.data
 
-export default Data.reducer
+export default Resizer.reducer

@@ -56,8 +56,16 @@ export default function BgFileUpload() {
         }
       })
       .then((res) => {
-        dispatch(addData(res.data.url));
-        router.push("/bgremover/upload");
+        dispatch(
+          addData({
+            firstImg: files.length > 0 ? URL.createObjectURL(files[0]) : "",
+            secondImg: res.data.url
+          })
+        );
+        // console.log({
+        //   firstImg: files.length > 0 ? URL.createObjectURL(files[0]) : "",
+        //   secondImg: res.data.url
+        // });
       })
       .catch((err) => {
         console.log(err);
