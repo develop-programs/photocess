@@ -8,12 +8,19 @@ export default function Result() {
   const data = useSelector((state: any) => state.resizer);
 
   const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = data.SecondImg;
-    link.download = "downloaded_image.png";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    fetch(data.SecondImg)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "downloaded_image.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => console.error("Download failed:", error));
   };
   if (data.image == "") return null;
   if (data.loading == true) return <div>Loading...</div>;

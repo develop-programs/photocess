@@ -11,6 +11,8 @@ import { Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addData } from "@/Redux/reducers/resize";
 
 const FileSvgDraw = () => {
   return (
@@ -45,18 +47,25 @@ export default function ResizerFileUpload() {
   const [files, setFiles] = useState<File[] | null>(null);
   const [width, setWidth] = useState<number | null>(null);
   const [height, setHeight] = useState<number | null>(null);
+
+  const dispatch = useDispatch();
+
   const dropZoneConfig = {
     maxFiles: 5,
     maxSize: 1024 * 1024 * 4,
     multiple: true
   };
 
-  async function resizeImage(file: File, width: number, height: number) {
+  async function resizeImage() {
     if (files !== null && files.length > 0) {
       const formData = new FormData();
       formData.append("file", files[0]);
-      formData.append("width", width.toString());
-      formData.append("height", height.toString());
+      if (width !== null) {
+        formData.append("width", width.toString());
+      }
+      if (height !== null) {
+        formData.append("height", height.toString());
+      }
 
       axios
         .post("http://127.0.0.1:8000/resize_image", formData, {
@@ -64,7 +73,9 @@ export default function ResizerFileUpload() {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then((res) => {})
+        .then((res) => {
+          dispatch(addData(res.data.url));
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -98,9 +109,27 @@ export default function ResizerFileUpload() {
       {files
         ? files.length > 0 && (
             <div className="flex justify-between gap-12">
-              <Input type="number" placeholder="width" />
-              <Input type="number" placeholder="height" />
-              <Button variant="gooeyRight" className="px-7" onClick={() => {}}>
+              <Input
+                type="number"
+                placeholder="width"
+                onChange={(event) => {
+                  setWidth(parseInt(event.target.value));
+                }}
+              />
+              <Input
+                type="number"
+                placeholder="height"
+                onChange={(event) => {
+                  setHeight(parseInt(event.target.value));
+                }}
+              />
+              <Button
+                variant="gooeyRight"
+                className="px-7"
+                onClick={() => {
+                  resizeImage();
+                }}
+              >
                 Resize
               </Button>
             </div>
